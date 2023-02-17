@@ -1,31 +1,18 @@
 var express = require("express")
 var app = express()
 var cors = require('cors')
-let projectCollection 
+let projectCollection;
+let dbConnect = require("./dbConnect");
+let projectRoutes = require("./routes/projectRoute");​
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/api/projects', projectRoutes)​;
 
-//database connection
-const MongoClient = require('mongoDb').MongoClient
-const uri = 'mongodb + srv://mthakoor:1234@cluster0.glpoci1.mongodb.net/?retryWrites=true&w=majority'
-const client = new MongoClient(uri, { useNewUrlParser: true })
 
-const createColllection = (collectionName) => {
-    client.connect((err, db) => {
-        projectCollection = client.db().collection(collectionName);
-        if (!err) {
-            console.log('MongoDB Connected')
-        }
-        else {
-            console.log("DB Error: ", err);
-            process.exit(1);
-        }
-    })
-}
 
-// insert project
+/* // insert project
 const insertProjects = (project, callback) => {
     projectCollection.insert(project, callback);
 }
@@ -46,23 +33,6 @@ app.post('/api/projects', (req, res) => {
     })
 })
 
-// const cardList = [
-//     {
-//         title: "Kitten 2",
-//         image: "images/kitten2.jpg",
-//         link: "About Kitten 2",
-//         desciption: "Demo desciption about kitten 2"
-//     },
-
-//     {
-//         title: "Kitten 3",
-//         image: "images/kitten2.jpg",
-//         link: "About Kitten 3",
-//         desciption: "Demo desciption about kitten 3"
-//     }
-
-// ]
-
 
 // get project...​
 const getProjects = (callback) => {
@@ -78,7 +48,7 @@ app.get('/api/projects', (req, res) => {
             res.json({ statusCode: 200, message: "Success", data: result })
         }
     })
-})​
+}) */​
 
 var port = process.env.port || 3001;
 app.listen(port,()=>{
